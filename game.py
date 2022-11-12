@@ -2,9 +2,6 @@ import card
 import random
 import player
 ##### 314159265
-
-#comment1
-#comment2
 class Game:
     def __init__(self):
         self.deck = []
