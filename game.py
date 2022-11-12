@@ -6,15 +6,16 @@ import player
 class Game:
     def __init__(self):
         self.deck = []
-        self.players = {}
+        self.createDeck()
+        self.players = []
         self.hakem = None
-        SIGNS = ['heart', 'club', 'diamond', 'spade']
-        VALUES = ['King', 'Queen', 'jack', 'Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
-        for i in range(len(SIGNS)):
-            for j in range(len(VALUES)):
-                self.deck.append(card.Card(VALUES[j], SIGNS[i]))
-    #def createDeck
+
+    def createDeck(self):
+        #This
+        SUITS = ['H', 'C', 'D', 'S']
+        RANKS = ['K', 'Q', 'J', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+        self.deck=[card.Card(rank, suit) for suit in SUITS for rank in RANKS]
 
     def joinPlayer(self, player):
         ##function
@@ -24,24 +25,34 @@ class Game:
             self.players[max(list(self.players.keys())) + 1] = player
 
     def show_players(self):
-        for k in (self.players):
-            print(k.__str__())
+        for player in (self.players):
+            print(str(player)) #=str(k)
 
     def __str__(self):
-        for obj in self.cards:
-            print(obj, sep=' ')
+        #This means that when executing str(game) it prints cards in the deck
+        for card in self.deck:
+            print(card, sep=' ')
 
     def shuffle(self, count):
-        sh_hand = []
-        for i in range(count):
-            k = random.randint(1, len(self.deck) - 1)
-            q = self.deck.pop(k)  ## removes
-            sh_hand.append(q)
-        return sh_hand
 
-    # def get_hand(self,card_list,player):
-    #     for card in card_list:
-    #         player.hand.append(card)
+        hand = []
+        for i in range(count):
+            k = random.randint(0, len(self.deck)-1)
+            card = self.deck.pop(k)  ## removes
+            hand.append(card)
+        return hand
+    def shuffleDeck(self):
+        ##write code to rearrange deck (shuffle the deck)
+        self.createDeck() ##TODO: check for later
+        random.shuffle(self.deck)
+
+
+
+    def getCards(self, count):
+        hand = [self.deck.pop(i) for i in range(count)]
+        return hand
+
+
 
     def get_hand(self, card_list, player):
         player.hand.extend(card_list)
@@ -55,37 +66,74 @@ class Game:
     def get_hokm(self):
         return self.hokm
 
-    # for first round
 
-    def findhakem(self):
+    # for first round
+    def findHakem(self):
+        self.createDeck()
+        self.shuffleDeck()
         while self.hakem == None:
-            for _, player in self.players.items():
+            for player in self.players:
                 card = self.shuffle(1)[0]
-                if card.__str__().split('__')[0] == 'Ace':
-                    print(player.__str__() + " is hakem")
+                if str(card).split('__')[0] == 'Ace':
+                    print(str(player) + " is hakem")
                     player.set_hakem()
                     break
+        dealer = hakem_index - 1
+
+    def arrangePlayers
+
+    def giveToken(self,player):
+
+
+    def getPlayers(self):
+        return self.players
 
 
 if __name__ == '__main__':
-    game = Game()  ## this will instantiate the game by creating 52 card objects of a complete deck of cards
+
+    game = Game()
+    game.shuffleDeck()
+    # for card in game.deck:
+    #     print(card)
+    hand=game.getCards(4)
+    for card in hand:
+        print(card)
+    print(len(game.deck))
+    # game flow
+
+    # Do this once at the start of the game
+    # housekeeping: Arrange players
+    # find hakem
+    # find hakem's teammate
+    # find dealer's teammate
+    # find dealer (is the person to the right of the Hakem, AKA, index hakem - 1)
+    # datastructure to encapsulate players arrangement
 
 
-    game.joinPlayer(player.Player("ghasem"))
+
+    # Find Hokm
+    # arrange seats
+
+    # game = Game()  ## this will instantiate the game by creating 52 card objects of a complete deck of cards
+    #
+    #
+    # game.joinPlayer(player.Player("ghasem"))
+    # print(str(game.players[0]))
     # game.joinPlayer(player.Player("james"))
     # game.joinPlayer(player.Player("Xantia"))
     # game.joinPlayer(player.Player("Pegut"))
+    # game.show_players()
     #game.players[1].giveCard(game.shuffle(1)[0])
 
     ##TODO: find hakem, find his teammate, and the dealer
 
     ##TODO HOKM Gameflow: Dealer Rules
-    first_hand = True
-    if first_hand:
-        for i in range(5):
-            game.players[1].giveCard(game.shuffle(3))
-        first_hand = False
-    game.players[1].show_hand()
+    # first_hand = True
+    # if first_hand:
+    #     for i in range(5):
+    #         game.players[1].giveCard(game.shuffle(3))
+    #     first_hand = False
+    # game.players[1].show_hand()
 
     #cards_list = game.shuffle(3)
     #
