@@ -18,11 +18,8 @@ class Game:
         self.deck=[card.Card(rank, suit) for suit in SUITS for rank in RANKS]
 
     def joinPlayer(self, player):
-        ##function
-        if not self.players:
-            self.players[1] = player
-        else:
-            self.players[max(list(self.players.keys())) + 1] = player
+
+        self.players.append(player)
 
     def show_players(self):
         for player in (self.players):
@@ -78,7 +75,7 @@ class Game:
                     print(str(player) + " is hakem")
                     player.set_hakem()
                     break
-        dealer = hakem_index - 1
+        dealer = hakem_inddex - 1
 
     def arrangePlayers
 
@@ -126,6 +123,10 @@ if __name__ == '__main__':
     #game.players[1].giveCard(game.shuffle(1)[0])
 
     ##TODO: find hakem, find his teammate, and the dealer
+
+    ##Show me the deck
+   #
+   # str(game.)
 
     ##TODO HOKM Gameflow: Dealer Rules
     # first_hand = True
