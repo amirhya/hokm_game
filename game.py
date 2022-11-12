@@ -77,10 +77,11 @@ class Game:
                     break
         dealer = hakem_inddex - 1
 
-    def arrangePlayers
+    def arrangePlayers(self, player):
+        pass
 
     def giveToken(self,player):
-
+        pass
 
     def getPlayers(self):
         return self.players
