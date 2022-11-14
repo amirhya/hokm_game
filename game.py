@@ -4,7 +4,6 @@ import player
 #####  #####    #####
 
 
-
 class Game:
     def __init__(self):
         self.deck = []
