@@ -11,31 +11,42 @@ class Game:
     def __init__(self, team1="Team 1", team2= " Team 2"):
         self.deck = []
         self.createDeck()
+
         self.players = []
-        self.hakem = None
         self.roles={ROLES[0]:None, ROLES[1]:None, ROLES[2]:None, ROLES[3]:None}
-        self.priorities={"Hakem":0,  "Hakem's Teammate":2, "Dealer's Teammate":3, "dealer":4}
+        self.priorities={ROLES[0]:0,  ROLES[1]:2, ROLES[2]:3, ROLES[3]:4}
         self.scoresRound = {team1: 0, team2: 0}
         self.scoresTotal={team1:0, team2:0}
 
-    def getCardFromDeck(self, count):
-        hand = [self.deck.pop(i) for i in range(count)]
+    def getCardFromDeck(self, count,verbose=0):
+
+        if verbose==1 and count==1:
+            print("Getting "+str(count)+" number of cards from deck")
+        hand = [self.deck.pop(card) for card in range(count)]
         return hand
 
     def findRolesTeams(self):
         ##Figures out who is Hakem, his teammate, dealer's teammate, and the dealer.
+        print("Finding Roles")
         self.createDeck()
         self.shuffleDeck()
         idPlayer=0
         idRole=0
-        while not self.roles["Dealer"]: # while dealer is not found
-            card = self.getCardFromDeck(1)[0]
+        pickedIds=[]
+        remainingIds=[0,1,2,3]
+        numRemainingPlayers=4
+        while not self.roles[ROLES[3]]: # while dealer is not found
+            card = self.getCardFromDeck(1, verbose=0)[0]
             if card.rank == 'A':
-                self.roles[ROLES[idRole]] = self.players[idPlayer]
-                self.players[idPlayer].setRole(ROLES[idRole])
-                print(str(self.players[idPlayer])+" is " + ROLES[idRole])
+                player=self.players[remainingIds[idPlayer]]
+                player.setRole(ROLES[idRole])
+                self.roles[ROLES[idRole]] = player
+                print(str(player)+" is " + ROLES[idRole])
+                numRemainingPlayers = max(1, numRemainingPlayers - 1)
                 idRole+=1
-            idPlayer=(idPlayer+1)%4
+                remainingIds.pop(idPlayer)
+            idPlayer = (idPlayer + 1) % numRemainingPlayers
+
 
 
 
@@ -53,11 +64,11 @@ class Game:
 
 
     def createDeck(self):
-        #This
+        print("Creating Deck")
         self.deck=[cardClass.Card(rank, suit) for suit in SUITS for rank in RANKS]
 
     def joinPlayer(self, player):
-
+        print(str(player)+ "joined the game")
         self.players.append(player)
 
     def strPlayers(self):
@@ -82,6 +93,7 @@ class Game:
     def shuffleDeck(self):
         ##write code to rearrange deck (shuffle the deck)
         #self.createDeck() ##TODO: check for later
+        print("Shuffling deck...")
         random.shuffle(self.deck)
 
 
@@ -120,21 +132,11 @@ class Game:
 if __name__ == '__main__':
 
     game = Game()
-    game.shuffleDeck()
-    # # for card in game.deck:
-    # #     print(card)
-    # hand=game.getCards(4)
-    # for card in hand:
-    #     print(card)
-    # print(len(game.deck))
-
-
-
-    ## Adding Players
     game.joinPlayer(playerClass.Player("Amir"))
     game.joinPlayer(playerClass.Player("Sahand"))
     game.joinPlayer(playerClass.Player("David"))
     game.joinPlayer(playerClass.Player("Jamal"))
+
     print(str(game))
     game.findRolesTeams()
     # find hakem and team mates
