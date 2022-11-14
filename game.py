@@ -1,7 +1,10 @@
 import card
 import random
 import player
-##### 314159265
+#####  #####    #####
+
+
+
 class Game:
     def __init__(self):
         self.deck = []
@@ -74,7 +77,7 @@ class Game:
                     print(str(player) + " is hakem")
                     player.set_hakem()
                     break
-        dealer = hakem_inddex - 1
+        #dealer = hakem_inddex - 1
 
     def arrangePlayers(self, player):
         pass
