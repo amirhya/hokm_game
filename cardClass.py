@@ -1,3 +1,9 @@
+""""
+This file includes class implementation of Card
+
+"""
+
+
 class Card:
     def __init__(self, rank, suit):
         self.rank = rank
